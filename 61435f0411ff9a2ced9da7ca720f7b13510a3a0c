@@ -1,0 +1,6 @@
+Code-Review+2: Naoto YAMAGUCHI <naoto.yamaguchi@aisin.co.jp>
+Submitted-by: Jan-Simon Moeller <jsmoeller@linuxfoundation.org>
+Submitted-at: Mon, 22 Nov 2021 16:00:42 +0000
+Reviewed-on: https://gerrit.automotivelinux.org/gerrit/c/src/cluster-refgui/+/26882
+Project: src/cluster-refgui
+Branch: refs/heads/lamprey
