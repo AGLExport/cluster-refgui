@@ -46,14 +46,6 @@ Item {
         id: mapParts
         visible:false
         anchors.fill: parent
-        Video {
-            id: mapVideo
-            autoLoad: true
-            anchors.fill: parent
-            visible: true
-            loops: MediaPlayer.Infinite
-            source: "gst-pipeline: filesrc location=" + CurDirPath + "/map_movie.mp4 ! decodebin ! videoconvert ! qtvideosink"
-        }
 
         Item{
             id:mapMask
