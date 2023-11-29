@@ -1,0 +1,7 @@
+Code-Review+2: Jan-Simon Moeller <jsmoeller@linuxfoundation.org>
+Code-Review+2: Naoto YAMAGUCHI <naoto.yamaguchi@aisin.co.jp>
+Submitted-by: Naoto YAMAGUCHI <naoto.yamaguchi@aisin.co.jp>
+Submitted-at: Wed, 29 Nov 2023 14:48:16 +0000
+Reviewed-on: https://gerrit.automotivelinux.org/gerrit/c/src/cluster-refgui/+/29475
+Project: src/cluster-refgui
+Branch: refs/heads/master
