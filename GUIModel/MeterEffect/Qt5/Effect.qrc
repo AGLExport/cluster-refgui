@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/MeterEffect">
+        <file>qmldir</file>
+        <file>GaussianBlur.qml</file>
+        <file>OpacityMask.qml</file>
+        <file>ShaderPath.qml</file>
+    </qresource>
+</RCC>

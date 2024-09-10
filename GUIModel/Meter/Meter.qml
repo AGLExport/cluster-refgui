@@ -15,75 +15,71 @@
  */
 
 import QtQuick 2.14
-import QtGraphicalEffects 1.14
 
 Item {
     id: meter
     property real speedValue: 0
     property real tachoValue: 0
-    property real chargeValue:100
+    property real chargeValue: 100
 
     onSpeedValueChanged: {
-        speedGuage.speedValue = speedValue
-        speedNeedle.speedValue = speedValue
-        digitalSpeed.speedValue = speedValue
+        speedGuage.speedValue = speedValue;
+        speedNeedle.speedValue = speedValue;
+        digitalSpeed.speedValue = speedValue;
     }
 
     onTachoValueChanged: {
-        tachometer.tachoValue = tachoValue
+        tachometer.tachoValue = tachoValue;
     }
     onChargeValueChanged: {
-        chargeGuage.chargeValue = chargeValue
+        chargeGuage.chargeValue = chargeValue;
     }
-
 
     Item {
-       id: meterParts
-       property var easing: Easing.InOutQuad
+        id: meterParts
+        property var easing: Easing.InOutQuad
 
-       Connections{
-           target: rootItem
-           onTransNormalToAdas:{
-               / *nop */
-           }
-       }
+        Connections {
+            target: rootItem
+            onTransNormalToAdas: {
+                / *nop */;
+            }
+        }
 
-       Sideline {
-           id: sideline
-       }
+        Sideline {
+            id: sideline
+        }
 
-       Ring {
-           id: ring
-       }
+        Ring {
+            id: ring
+        }
 
-       ChargeGuage {
-           id: chargeGuage
-       }
+        ChargeGuage {
+            id: chargeGuage
+        }
 
-       SpeedGuage {
-           id: speedGuage
-       }
+        SpeedGuage {
+            id: speedGuage
+        }
 
-       SpeedNeedle {
-           id: speedNeedle
-       }
+        SpeedNeedle {
+            id: speedNeedle
+        }
 
-       Tachometer {
-           id: tachometer
-       }
+        Tachometer {
+            id: tachometer
+        }
 
-       Ready {
-           id: ready
-       }
+        Ready {
+            id: ready
+        }
 
-       Mask {
-           id: mask
-       }
+        Mask {
+            id: mask
+        }
 
-       DigitalSpeed {
-           id: digitalSpeed
-       }
+        DigitalSpeed {
+            id: digitalSpeed
+        }
     }
 }
-
-

@@ -15,138 +15,144 @@
  */
 
 import QtQuick 2.14
-import QtGraphicalEffects 1.14
 
 Item {
     id: sideline
     width: 1780
     height: 1780
-    x:70
-    y:-499
-    
-    Connections{
+    x: 70
+    y: -499
+
+    Connections {
         target: rootItem
-        onTransNormalToAdas:{
-            normalToAdasAnimation.start()
+        onTransNormalToAdas: {
+            normalToAdasAnimation.start();
         }
     }
 
-    Image{
-        id:meterLineR
+    Image {
+        id: meterLineR
         source: "qrc:/Images/NormalView/METER/meter_line_r.ktx"
-        x:980
-        y:0
-        width:800
-        height:636
+        x: 980
+        y: 0
+        width: 800
+        height: 636
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: parent.right
         anchors.rightMargin: 0
     }
-    
-    Image{
-        id:meterLineL
+
+    Image {
+        id: meterLineL
         source: "qrc:/Images/NormalView/METER/meter_line_l.ktx"
-        y:0
-        width:800
-        height:636
+        y: 0
+        width: 800
+        height: 636
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.leftMargin: 0
     }
-    
+
     transform: Rotation {
-        id:sidelineRotation
-        origin.x: sideline.width/2;
-        origin.y: sideline.height/2;
+        id: sidelineRotation
+        origin.x: sideline.width / 2
+        origin.y: sideline.height / 2
         angle: 0
     }
-    
-    SequentialAnimation{
+
+    SequentialAnimation {
         id: normalToAdasAnimation
-        onStarted: rootItem.focus=false
+        onStarted: rootItem.focus = false
         PauseAnimation {
             duration: 330
         }
-        
-        ParallelAnimation{
+
+        ParallelAnimation {
             /* down size */
-            NumberAnimation{
+            NumberAnimation {
                 target: sideline
                 property: "scale"
                 duration: 891
                 easing.type: meterParts.easing
-                from:1
-                to:0.75
+                from: 1
+                to: 0.75
             }
-            
+
             /* rotation */
-            PropertyAnimation{
+            PropertyAnimation {
                 target: sidelineRotation
                 property: "angle"
                 duration: 891
                 easing.type: meterParts.easing
-                from:0
-                to:-90
+                from: 0
+                to: -90
             }
-            
+
             /* translation */
-            PathAnimation{
+            PathAnimation {
                 target: sideline
-                anchorPoint: Qt.point(sideline.width/2, sideline.height/2)
+                anchorPoint: Qt.point(sideline.width / 2, sideline.height / 2)
                 orientation: PathAnimation.Fixed
                 duration: 891
                 easing.type: meterParts.easing
-                
+
                 path: Path {
-                    startX: 960; startY: 391
-                    PathLine { x: 540; y: 402 }
+                    startX: 960
+                    startY: 391
+                    PathLine {
+                        x: 540
+                        y: 402
+                    }
                 }
             }
         }
     }
-    
-    SequentialAnimation{
+
+    SequentialAnimation {
         id: mapToNormalAnimation
-        onStarted: rootItem.focus=false
+        onStarted: rootItem.focus = false
         PauseAnimation {
             duration: 254 + 330
         }
-        
-        ParallelAnimation{
+
+        ParallelAnimation {
             /* down size */
-            NumberAnimation{
+            NumberAnimation {
                 target: sideline
                 property: "scale"
                 duration: 891
                 easing.type: meterParts.easing
-                from:0.75
-                to:1.0
+                from: 0.75
+                to: 1.0
             }
-            
+
             /* rotation */
-            PropertyAnimation{
+            PropertyAnimation {
                 target: sidelineRotation
                 property: "angle"
                 duration: 891
                 easing.type: meterParts.easing
-                from:-90
-                to:0
+                from: -90
+                to: 0
             }
-            
+
             /* translation */
-            PathAnimation{
+            PathAnimation {
                 target: sideline
-                anchorPoint: Qt.point(sideline.width/2, sideline.height/2)
+                anchorPoint: Qt.point(sideline.width / 2, sideline.height / 2)
                 orientation: PathAnimation.Fixed
                 duration: 891
                 easing.type: meterParts.easing
-                
+
                 path: Path {
-                    startX: 540; startY: 402
-                    PathLine { x: 960; y: 391 }
+                    startX: 540
+                    startY: 402
+                    PathLine {
+                        x: 960
+                        y: 391
+                    }
                 }
             }
         }
     }
-    
 }

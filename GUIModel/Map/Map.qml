@@ -16,55 +16,59 @@
 
 import QtQuick 2.14
 import QtMultimedia 5.14
-import QtGraphicalEffects 1.14
 
 Item {
     id: map
-    x:1920 - 1200
-    y:0
-    width : 1200
-    height : 720
+    x: 1920 - 1200
+    y: 0
+    width: 1200
+    height: 720
     Component.onCompleted: {
-        mapVideo.play()
+        mapVideo.play();
     }
 
-    Connections{
+    Connections {
         target: rootItem
-        onTransNormalToAdas:{
+        onTransNormalToAdas: {}
+
+        onTransAdasToMap: {
+            adasToMapAnimationMap.start();
         }
 
-        onTransAdasToMap:{
-            adasToMapAnimationMap.start()
-        }
-
-        onTransMapToNormal:{
-            mapToNormalAnimationMap.start()
+        onTransMapToNormal: {
+            mapToNormalAnimationMap.start();
         }
     }
 
-    Item{
+    Item {
         id: mapParts
-        visible:false
+        visible: false
         anchors.fill: parent
 
-        Item{
-            id:mapMask
+        Item {
+            id: mapMask
             x: 0
             y: 0
-            Image{
+            Image {
                 width: 1200
                 height: 720
                 source: "qrc:/Images/ADASView/MAP/map_mask.ktx"
             }
 
-            Image{ source:"qrc:/Images/ADASView/MAP/acc_cover.ktx"; width:1412; height:98; x:508-map.x; y:622 }
+            Image {
+                source: "qrc:/Images/ADASView/MAP/acc_cover.ktx"
+                width: 1412
+                height: 98
+                x: 508 - map.x
+                y: 622
+            }
         }
-   }
+    }
 
-    SequentialAnimation{
-        id:adasToMapAnimationMap
-        onStarted: rootItem.focus=false
-        onStopped: rootItem.focus=true
+    SequentialAnimation {
+        id: adasToMapAnimationMap
+        onStarted: rootItem.focus = false
+        onStopped: rootItem.focus = true
 
         PauseAnimation {
             duration: 330
@@ -77,24 +81,23 @@ Item {
             to: true
         }
 
-        PropertyAnimation{
+        PropertyAnimation {
             target: mapParts
             property: "opacity"
             duration: 330
-            from:0
-            to:1
+            from: 0
+            to: 1
         }
     }
 
-    SequentialAnimation{
-        id:mapToNormalAnimationMap
-        onStarted: rootItem.focus=false
+    SequentialAnimation {
+        id: mapToNormalAnimationMap
+        onStarted: rootItem.focus = false
         PauseAnimation {
             duration: 254
         }
 
-
-        PropertyAnimation{
+        PropertyAnimation {
             target: mapParts
             property: "opacity"
             duration: 330
@@ -109,6 +112,4 @@ Item {
             to: false
         }
     }
-
-
 }

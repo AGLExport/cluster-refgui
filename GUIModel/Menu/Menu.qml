@@ -15,65 +15,63 @@
  */
 
 import QtQuick 2.0
-import QtGraphicalEffects 1.0
 import QtQuick.Shapes 1.11
 
-
-Item{
+Item {
     id: menuRoot
 
-    Connections{
+    Connections {
         target: rootItem
-        onTransNormalToAdas:{
-            menuMain.startAnimationNormalToAdas()
-            menuContents.startAnimationNormalToAdas()
-            menuShade.startAnimationNormalToAdas()
+        onTransNormalToAdas: {
+            menuMain.startAnimationNormalToAdas();
+            menuContents.startAnimationNormalToAdas();
+            menuShade.startAnimationNormalToAdas();
         }
 
-        onKeyPressed_Up:{
-            if(menu.state === "open"){
-                menuMain.incrementIndex()
+        onKeyPressed_Up: {
+            if (menu.state === "open") {
+                menuMain.incrementIndex();
             }
         }
 
-        onKeyPressed_Down:{
-            if(menu.state === "open"){
-                menuMain.decrementIndex()
+        onKeyPressed_Down: {
+            if (menu.state === "open") {
+                menuMain.decrementIndex();
             }
         }
 
-        onKeyPressed_Left:{
-            if(menu.state === "close"){
-                menuContents.decrementIndex()
+        onKeyPressed_Left: {
+            if (menu.state === "close") {
+                menuContents.decrementIndex();
             }
         }
 
-        onKeyPressed_Right:{
-            if(menu.state === "close"){
-                menuContents.incrementIndex()
+        onKeyPressed_Right: {
+            if (menu.state === "close") {
+                menuContents.incrementIndex();
             }
         }
 
-        onKeyPressed_Enter:{
-            if(menu.state === "close"){
-                menuContents.enter()
-            }else if(menu.state === "open"){
-                menuContents.close()
-                menuMain.close()
-                menu.state = "close"
+        onKeyPressed_Enter: {
+            if (menu.state === "close") {
+                menuContents.enter();
+            } else if (menu.state === "open") {
+                menuContents.close();
+                menuMain.close();
+                menu.state = "close";
             }
         }
 
-        onKeyPressed_Menu:{
-            if(menu.state === "close"){
-                menuContents.open()
-                menuMain.open()
-                menu.state = "open"
+        onKeyPressed_Menu: {
+            if (menu.state === "close") {
+                menuContents.open();
+                menuMain.open();
+                menu.state = "open";
             }
         }
     }
 
-    Item{
+    Item {
         id: menu
 
         property var mode: "normal" /* Normal or Adas */
@@ -92,8 +90,4 @@ Item{
             id: menuShade
         }
     }
-
-
-
-
 }

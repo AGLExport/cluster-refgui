@@ -15,7 +15,7 @@
  */
 
 import QtQuick 2.14
-import QtGraphicalEffects 1.14
+import "qrc:/MeterEffect/"
 
 Item {
     id: tachometer
@@ -26,103 +26,100 @@ Item {
 
     onTachoValueChanged: {
         limitTachoValue();
-        effectRpm.angle = (0.03375 * tachoValue*Math.PI/180)+effectRpm.angleBase
+        effectRpm.angle = (0.03375 * tachoValue * Math.PI / 180) + effectRpm.angleBase;
     }
 
-    Connections{
+    Connections {
         target: rootItem
-        onTransNormalToAdas:{
-            normalToAdasAnimation.start()
+        onTransNormalToAdas: {
+            normalToAdasAnimation.start();
         }
     }
 
-    function limitTachoValue(){
-        if(tachoValue > tachoValueMax){
-            tachoValue = tachoValueMax
-        }else if(tachoValue < tachoValueMin){
-            tachoValue = tachoValueMin
+    function limitTachoValue() {
+        if (tachoValue > tachoValueMax) {
+            tachoValue = tachoValueMax;
+        } else if (tachoValue < tachoValueMin) {
+            tachoValue = tachoValueMin;
         }
     }
 
-    Image{
-        id:rpmGuage
+    Image {
+        id: rpmGuage
         source: "qrc:/Images/NormalView/METER/prm_guage.ktx"
-        x:770
-        y:200
-        width:380
-        height:382
+        x: 770
+        y: 200
+        width: 380
+        height: 382
         visible: false
     }
-    ShaderEffect{
+    ShaderEffect {
         id: effectRpm
         anchors.fill: rpmGuage
         visible: true
         blending: true
         supportsAtlasTextures: true
-        property real angleBase: -pi*3/4
-        property real angle:-pi*3/4
-        property var src: ShaderEffectSource{
+        property real angleBase: -pi * 3 / 4
+        property real angle: -pi * 3 / 4
+        property var src: ShaderEffectSource {
             sourceItem: rpmGuage
             live: false
         }
 
-
         readonly property real pi: 3.1415926535
 
-        vertexShader: "qrc:/Shaders/vert/guageMask.vert"
-        fragmentShader:"qrc:/Shaders/frag/guageMask.frag"
+        vertexShader: ShaderPath.guageMaskVert
+        fragmentShader: ShaderPath.guageMaskFrag
     }
 
-    
-    Image{
-        id:rpmTxt
+    Image {
+        id: rpmTxt
         source: "qrc:/Images/NormalView/METER/prm_txt.png"
-        x:770
-        y:190
-        width:379
-        height:401
+        x: 770
+        y: 190
+        width: 379
+        height: 401
     }
-    
-    SequentialAnimation{
-        id:normalToAdasAnimation
-        onStarted: rootItem.focus=false
-        PropertyAnimation{
-            target:tachometer
-            property:"opacity"
+
+    SequentialAnimation {
+        id: normalToAdasAnimation
+        onStarted: rootItem.focus = false
+        PropertyAnimation {
+            target: tachometer
+            property: "opacity"
             duration: 330
             easing.type: Easing.Linear
-            to:0
+            to: 0
         }
-        PropertyAnimation{
+        PropertyAnimation {
             target: tachometer
             property: "visible"
             duration: 0
-            to:false
+            to: false
         }
     }
-    
-    SequentialAnimation{
-        id:mapToNormalAnimation
-        onStarted: rootItem.focus=false
-        
+
+    SequentialAnimation {
+        id: mapToNormalAnimation
+        onStarted: rootItem.focus = false
+
         PauseAnimation {
             duration: 891 + 330 + 254
         }
-        
-        PropertyAnimation{
+
+        PropertyAnimation {
             target: tachometer
             property: "visible"
             duration: 0
-            to:true
+            to: true
         }
-        
-        PropertyAnimation{
-            target:tachometer
-            property:"opacity"
+
+        PropertyAnimation {
+            target: tachometer
+            property: "opacity"
             duration: 330
             easing.type: Easing.Linear
-            to:1
+            to: 1
         }
     }
-    
 }
