@@ -14,17 +14,21 @@
  * limitations under the License.
  */
 
+#include <QDebug>
+#include <QDir>
+#include <QDirIterator>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QSurfaceFormat>
-#include <QDir>
 #include <QQmlContext>
-#include <QDebug>
-
+#include <QSurfaceFormat>
+#if QT_VERSION >= 0x060000
+#include <QQuickWindow>
+#endif
 #include "cluster-service.hxx"
 
 int main(int argc, char *argv[])
 {
+#ifdef CROSSCOMPILING
     QSurfaceFormat defaultFormat;
     defaultFormat.setSwapBehavior(QSurfaceFormat::TripleBuffer);
     defaultFormat.setRenderableType(QSurfaceFormat::OpenGLES);
@@ -34,6 +38,17 @@ int main(int argc, char *argv[])
     defaultFormat.setDepthBufferSize(8);
     defaultFormat.setAlphaBufferSize(8);
     QSurfaceFormat::setDefaultFormat(defaultFormat);
+#endif
+
+#if QT_VERSION >= 0x060000
+    QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
+    qputenv("QT_ENABLE_HIGHDPI_SCALING", "0");
+#endif
+
+    QDirIterator it(":", QDirIterator::Subdirectories);
+    while (it.hasNext()) {
+        qDebug() << it.next();
+    }
 
     QGuiApplication app(argc, argv);
 

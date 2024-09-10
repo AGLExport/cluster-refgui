@@ -1,0 +1,3 @@
+singleton ShaderPath 1.0 ShaderPath.qml
+GaussianBlur 1.0 GaussianBlur.qml
+OpacityMask 1.0 OpacityMask.qml

@@ -15,12 +15,12 @@
  */
 
 import QtQuick 2.14
-import QtGraphicalEffects 1.14
+import "qrc:/MeterEffect/"
 
 Item {
     id: speedNeedle
-    width:444
-    height:444
+    width: 444
+    height: 444
     x: 318
     y: 180
     visible: false
@@ -31,165 +31,160 @@ Item {
 
     onSpeedValueChanged: {
         setNeedleAngle();
-        effectPwrNeedle.angle = (2.25 * speedValue*Math.PI/180)+effectPwrNeedle.angleBase
+        effectPwrNeedle.angle = (2.25 * speedValue * Math.PI / 180) + effectPwrNeedle.angleBase;
     }
-    
-    Connections{
+
+    Connections {
         target: rootItem
-        onTransNormalToAdas:{
-            normalToAdasAnimation.start()
+        onTransNormalToAdas: {
+            normalToAdasAnimation.start();
         }
     }
 
-    function setNeedleAngle(){
-        if(speedNeedleMax < speedValue){
-            speedValue = speedNeedleMax
-        }else if( speedValue < speedNeedleMin){
-            speedValue = speedNeedleMin
+    function setNeedleAngle() {
+        if (speedNeedleMax < speedValue) {
+            speedValue = speedNeedleMax;
+        } else if (speedValue < speedNeedleMin) {
+            speedValue = speedNeedleMin;
         }
-        rotateNeedle.angle = 2.25 * speedValue
+        rotateNeedle.angle = 2.25 * speedValue;
     }
 
     /* Needle - visible in ADAS/Map mode */
     Item {
-        id:needleGroup
-        width:444
-        height:444
-        
-        Image{
+        id: needleGroup
+        width: 444
+        height: 444
+
+        Image {
             id: pwrNeedle
             source: "qrc:/Images/ADASView/METER/needle.png"
             x: 28
             y: 220
-            width:182
-            height:4
+            width: 182
+            height: 4
             visible: false
         }
-        
-        Item{
+
+        Item {
             id: needleMask
             visible: false
-            anchors.fill:pwrNeedle
+            anchors.fill: pwrNeedle
             property double maskPercent: 0
-            
-            Rectangle{
+
+            Rectangle {
                 id: needleMaskInvisible
                 color: "red"
                 opacity: 0
                 anchors.left: parent.left
-                width: pwrNeedle.width * (1.0 - needleMask.maskPercent/100.0)
+                width: pwrNeedle.width * (1.0 - needleMask.maskPercent / 100.0)
                 height: pwrNeedle.height
                 visible: true
             }
-            Rectangle{
+            Rectangle {
                 id: needleMaskVisible
                 color: "blue"
                 anchors.right: parent.right
                 opacity: 1
-                width: pwrNeedle.width * (needleMask.maskPercent/100.0)
+                width: pwrNeedle.width * (needleMask.maskPercent / 100.0)
                 height: pwrNeedle.height
                 visible: true
             }
         }
-        
-        
+
         OpacityMask {
             id: maskedPwrNeedle
             cached: false
             width: pwrNeedle.x
-            height:pwrNeedle.y
-            anchors.fill:pwrNeedle
+            height: pwrNeedle.y
+            anchors.fill: pwrNeedle
             source: pwrNeedle
             maskSource: needleMask
         }
-        
-        transform: Rotation{
-            id:rotateNeedle
+
+        transform: Rotation {
+            id: rotateNeedle
             origin.x: needleGroup.width / 2
             origin.y: needleGroup.height / 2
-            angle : 0
+            angle: 0
         }
-        
-        
     }
-    
-    Item{
+
+    Item {
         id: centerCircleGroup
-        width:124
-        height:126
-        x:160
-        y:166
-        Image{
+        width: 124
+        height: 126
+        x: 160
+        y: 166
+        Image {
             id: centerCircle
             source: "qrc:/Images/ADASView/METER/center_circle.png"
-            width:124
-            height:126
+            width: 124
+            height: 126
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             visible: true
         }
     }
-    
+
     Item {
         id: pwrNeedleEffect
-        width:444
-        height:444
+        width: 444
+        height: 444
         x: 0
         y: 0
         visible: false
-        
-        Image{
+
+        Image {
             source: "qrc:/Images/ADASView/METER/pwr_wave.png"
-            width:444
-            height:442
+            width: 444
+            height: 442
             visible: true
         }
-        
-        Image{
+
+        Image {
             source: "qrc:/Images/ADASView/METER/pwr_glow.png"
-            width:444
-            height:442
+            width: 444
+            height: 442
             visible: true
         }
     }
-    
 
-    ShaderEffect{
+    ShaderEffect {
         id: effectPwrNeedle
         anchors.fill: pwrNeedleEffect
         visible: false
         blending: true
         supportsAtlasTextures: true
-        property real angleBase: -pi*1/2
-        property real angle:-pi*1/2
-        property var src: ShaderEffectSource{
+        property real angleBase: -pi * 1 / 2
+        property real angle: -pi * 1 / 2
+        property var src: ShaderEffectSource {
             sourceItem: pwrNeedleEffect
         }
 
         readonly property real pi: 3.1415926535
 
-        vertexShader: "qrc:/Shaders/vert/guageMask.vert"
-        fragmentShader:"qrc:/Shaders/frag/guageMask.frag"
+        vertexShader: ShaderPath.guageMaskVert
+        fragmentShader: ShaderPath.guageMaskFrag
     }
-    
-    
-    SequentialAnimation{
+
+    SequentialAnimation {
         id: normalToAdasAnimation
-        onStarted: rootItem.focus=false
-        onStopped: rootItem.focus=true
+        onStarted: rootItem.focus = false
+        onStopped: rootItem.focus = true
         PauseAnimation {
             duration: 330 + 891
         }
-        
-        PropertyAnimation{
+
+        PropertyAnimation {
             target: speedNeedle
             property: "visible"
             duration: 0
-            from:false
-            to:true
+            from: false
+            to: true
         }
-        
-        NumberAnimation{
+
+        NumberAnimation {
             target: centerCircle
             property: "scale"
             duration: 396
@@ -197,68 +192,67 @@ Item {
             from: 0
             to: 1
         }
-        
-        PropertyAnimation{
-            target:effectPwrNeedle
-            property:"visible"
-            duration:0
-            from:false
-            to:true
+
+        PropertyAnimation {
+            target: effectPwrNeedle
+            property: "visible"
+            duration: 0
+            from: false
+            to: true
         }
-        
-        ParallelAnimation{
+
+        ParallelAnimation {
             NumberAnimation {
-                target:needleMask
+                target: needleMask
                 property: "maskPercent"
                 duration: 198
-                from:0.0
-                to:100.0
+                from: 0.0
+                to: 100.0
             }
-            
-            NumberAnimation{
-                target:effectPwrNeedle
-                property:"opacity"
-                duration:198
-                from:0
-                to:1
+
+            NumberAnimation {
+                target: effectPwrNeedle
+                property: "opacity"
+                duration: 198
+                from: 0
+                to: 1
             }
         }
         PauseAnimation {
             duration: 330
         }
-        
     }
-    
-    SequentialAnimation{
+
+    SequentialAnimation {
         id: mapToNormalAnimation
-        onStarted: rootItem.focus=false
-        ParallelAnimation{
+        onStarted: rootItem.focus = false
+        ParallelAnimation {
             NumberAnimation {
-                target:needleMask
+                target: needleMask
                 property: "maskPercent"
                 duration: 198
-                from:100.0
-                to:0.0
+                from: 100.0
+                to: 0.0
             }
-            
-            NumberAnimation{
-                target:effectPwrNeedle
-                property:"opacity"
-                duration:198
-                from:1
-                to:0
+
+            NumberAnimation {
+                target: effectPwrNeedle
+                property: "opacity"
+                duration: 198
+                from: 1
+                to: 0
             }
         }
-        
-        PropertyAnimation{
-            target:effectPwrNeedle
-            property:"visible"
-            duration:0
-            from:true
-            to:false
+
+        PropertyAnimation {
+            target: effectPwrNeedle
+            property: "visible"
+            duration: 0
+            from: true
+            to: false
         }
-        
-        NumberAnimation{
+
+        NumberAnimation {
             target: centerCircle
             property: "scale"
             duration: 396
@@ -266,14 +260,13 @@ Item {
             from: 1
             to: 0
         }
-        
-        PropertyAnimation{
+
+        PropertyAnimation {
             target: speedNeedle
             property: "visible"
             duration: 0
-            from:true
-            to:false
+            from: true
+            to: false
         }
     }
-    
 }
