@@ -1,6 +1,7 @@
 #include "cluster-service.hxx"
 
 #if ENABLE_CLUSTER_BACKEND
+#include <climits>
 #include <cluster-api-sdevent.h>
 #include <cluster_api.h>
 #include <systemd/sd-daemon.h>
@@ -187,7 +188,7 @@ Q_INVOKABLE bool QClusterService::getLdwOff()
 #if ENABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
-    on_off_flag = getLdwOff();
+    on_off_flag = ::getLdwOff();
     if (on_off_flag == IC_HMI_OFF)
         retval = false;
     else
