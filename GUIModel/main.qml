@@ -283,11 +283,15 @@ Window {
 
         Timer {
             property int num  : 0
-            interval: 10
+            interval: 20
             repeat: true
             running: true
             onTriggered: {
-                doUpdateClusterData()
+                num = num + 20;
+                if (num >= 1000) {
+                    num = 0;
+                }
+                doUpdateClusterData(num)
             }
         }
 
@@ -321,7 +325,8 @@ Window {
 
     //FpsItem{}
 
-    function doUpdateClusterData(){
+    function doUpdateClusterData(update_count){
+
         // speed
         var speed_val_capi = cluster_service.getSpAnalogVal();
         meter.speedValue = speed_val_capi / 100.0;
@@ -357,7 +362,16 @@ Window {
         // Turn R
         var turnr_val_capi = cluster_service.getTurnR();
         if (turnr_val_capi === true) {
-            header.setTurnROn();
+            var tr_on_off = parseInt(update_count / 500);
+            if (tr_on_off === 0) {
+                header.setTurnROn();
+            } else if (tr_on_off === 1) {
+                header.setTurnROff();
+            } else if (tr_on_off === 2) {
+                header.setTurnROn();
+            } else {
+                header.setTurnROff();
+            }
         } else {
             header.setTurnROff();
         }
@@ -365,23 +379,42 @@ Window {
         // Turn L
         var turnl_val_capi = cluster_service.getTurnL();
         if (turnl_val_capi === true) {
-            header.setTurnLOn();
+            var tl_on_off = parseInt(update_count / 500);
+            if (tl_on_off === 0) {
+                header.setTurnLOn();
+            } else if (tl_on_off === 1) {
+                header.setTurnLOff();
+            } else if (tl_on_off === 2) {
+                header.setTurnLOn();
+            } else {
+                header.setTurnLOff();
+            }
         } else {
             header.setTurnLOff();
         }
 
         // Seetbelt
-        var sbeltr_val_capi = cluster_service.getFrontRightSeatbelt();
-        if (sbeltr_val_capi === true) {
-            telltale.telltaleSeatbelt = true;
-        } else {
-            telltale.telltaleSeatbelt = false;
-        }
         var sbeltl_val_capi = cluster_service.getFrontLeftSeatbelt();
         if (sbeltl_val_capi === true) {
-            telltale.telltaleSeatbelt2 = true;
+            telltale.telltaleSeatbelt = false;
         } else {
+            var sbl_on_off = parseInt(update_count / 250);
+            if (sbl_on_off === 0) {
+                telltale.telltaleSeatbelt = false;
+            } else {
+                telltale.telltaleSeatbelt = true;
+            }
+        }
+        var sbeltr_val_capi = cluster_service.getFrontRightSeatbelt();
+        if (sbeltr_val_capi === true) {
             telltale.telltaleSeatbelt2 = false;
+        } else {
+            var sbr_on_off = parseInt(update_count / 250);
+            if (sbr_on_off === 0) {
+                telltale.telltaleSeatbelt2 = false;
+            } else {
+                telltale.telltaleSeatbelt2 = true;
+            }
         }
 
         var genwarn_val_capi = cluster_service.getGeneralWarn();
@@ -417,13 +450,6 @@ Window {
             telltale.telltaleSrsAirbag = true;
         } else {
             telltale.telltaleSrsAirbag = false;
-        }
-
-        var espoff_val_capi = cluster_service.getEspOff();
-        if (espoff_val_capi === true) {
-            telltale.telltaleEpsOff = true;
-        } else {
-            telltale.telltaleEpsOff = false;
         }
 
         var brake_val_capi = cluster_service.getBrake();
