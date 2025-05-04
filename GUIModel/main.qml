@@ -371,14 +371,14 @@ Window {
         }
 
         // Seetbelt
-        var sbeltr_val_capi = cluster_service.getFrontRightSeatbelt();
-        if (sbeltr_val_capi === true) {
+        var sbeltl_val_capi = cluster_service.getFrontLeftSeatbelt();
+        if (sbeltl_val_capi === true) {
             telltale.telltaleSeatbelt = false;
         } else {
             telltale.telltaleSeatbelt = true;
         }
-        var sbeltl_val_capi = cluster_service.getFrontLeftSeatbelt();
-        if (sbeltl_val_capi === true) {
+        var sbeltr_val_capi = cluster_service.getFrontRightSeatbelt();
+        if (sbeltr_val_capi === true) {
             telltale.telltaleSeatbelt2 = false;
         } else {
             telltale.telltaleSeatbelt2 = true;
