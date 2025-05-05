@@ -283,12 +283,12 @@ Window {
 
         Timer {
             property int num  : 0
-            interval: 10
+            interval: 20
             repeat: true
             running: true
             onTriggered: {
                 num++
-                if (num == 400) {
+                if (num == 200) {
                     num = 0;
                 }
                 doUpdateClusterData(num)
@@ -362,7 +362,7 @@ Window {
         // Turn R
         var turnr_val_capi = cluster_service.getTurnR();
         if (turnr_val_capi === true) {
-            var tr_on_off = parseInt(update_count / 100);
+            var tr_on_off = parseInt(update_count / 50);
             if (tr_on_off === 0) {
                 header.setTurnROn();
             } else if (tr_on_off === 1) {
@@ -379,7 +379,7 @@ Window {
         // Turn L
         var turnl_val_capi = cluster_service.getTurnL();
         if (turnl_val_capi === true) {
-            var tl_on_off = parseInt(update_count / 100);
+            var tl_on_off = parseInt(update_count / 50);
             if (tl_on_off === 0) {
                 header.setTurnLOn();
             } else if (tl_on_off === 1) {
@@ -398,7 +398,7 @@ Window {
         if (sbeltl_val_capi === true) {
             telltale.telltaleSeatbelt = false;
         } else {
-            var sbl_on_off = parseInt(update_count / 200);
+            var sbl_on_off = parseInt(update_count / 100);
             if (sbl_on_off === 0) {
                 telltale.telltaleSeatbelt = true;
             } else {
@@ -409,7 +409,7 @@ Window {
         if (sbeltr_val_capi === true) {
             telltale.telltaleSeatbelt2 = false;
         } else {
-            var sbr_on_off = parseInt(update_count / 200);
+            var sbr_on_off = parseInt(update_count / 100);
             if (sbr_on_off === 0) {
                 telltale.telltaleSeatbelt2 = true;
             } else {
