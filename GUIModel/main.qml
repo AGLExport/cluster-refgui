@@ -419,13 +419,6 @@ Window {
             telltale.telltaleSrsAirbag = false;
         }
 
-        var espoff_val_capi = cluster_service.getEspOff();
-        if (espoff_val_capi === true) {
-            telltale.telltaleEpsOff = true;
-        } else {
-            telltale.telltaleEpsOff = false;
-        }
-
         var brake_val_capi = cluster_service.getBrake();
         if (brake_val_capi === true) {
             telltale.telltaleBrake = true;
