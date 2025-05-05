@@ -38,8 +38,6 @@ Window {
     flags: Qt.FramelessWindowHint
     maximumWidth: width
     maximumHeight: height
-    property int update_count  : 0
-
     Item{
         id: rootItem
         width: 1920
@@ -289,7 +287,11 @@ Window {
             repeat: true
             running: true
             onTriggered: {
-                doUpdateClusterData()
+                num++
+                if (num == 400) {
+                    num = 0;
+                }
+                doUpdateClusterData(num)
             }
         }
 
@@ -323,11 +325,7 @@ Window {
 
     //FpsItem{}
 
-    function doUpdateClusterData(){
-        update_count = update_count + 1;
-        if (update_count >= 400) {
-            update_count = 0;
-        }
+    function doUpdateClusterData(update_count){
 
         // speed
         var speed_val_capi = cluster_service.getSpAnalogVal();
