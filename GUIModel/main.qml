@@ -287,8 +287,8 @@ Window {
             repeat: true
             running: true
             onTriggered: {
-                num++
-                if (num == 200) {
+                num = num + 20;
+                if (num >= 1000) {
                     num = 0;
                 }
                 doUpdateClusterData(num)
@@ -362,7 +362,7 @@ Window {
         // Turn R
         var turnr_val_capi = cluster_service.getTurnR();
         if (turnr_val_capi === true) {
-            var tr_on_off = parseInt(update_count / 50);
+            var tr_on_off = parseInt(update_count / 500);
             if (tr_on_off === 0) {
                 header.setTurnROn();
             } else if (tr_on_off === 1) {
@@ -379,7 +379,7 @@ Window {
         // Turn L
         var turnl_val_capi = cluster_service.getTurnL();
         if (turnl_val_capi === true) {
-            var tl_on_off = parseInt(update_count / 50);
+            var tl_on_off = parseInt(update_count / 500);
             if (tl_on_off === 0) {
                 header.setTurnLOn();
             } else if (tl_on_off === 1) {
@@ -398,22 +398,22 @@ Window {
         if (sbeltl_val_capi === true) {
             telltale.telltaleSeatbelt = false;
         } else {
-            var sbl_on_off = parseInt(update_count / 100);
+            var sbl_on_off = parseInt(update_count / 250);
             if (sbl_on_off === 0) {
-                telltale.telltaleSeatbelt = true;
-            } else {
                 telltale.telltaleSeatbelt = false;
+            } else {
+                telltale.telltaleSeatbelt = true;
             }
         }
         var sbeltr_val_capi = cluster_service.getFrontRightSeatbelt();
         if (sbeltr_val_capi === true) {
             telltale.telltaleSeatbelt2 = false;
         } else {
-            var sbr_on_off = parseInt(update_count / 100);
+            var sbr_on_off = parseInt(update_count / 250);
             if (sbr_on_off === 0) {
-                telltale.telltaleSeatbelt2 = true;
-            } else {
                 telltale.telltaleSeatbelt2 = false;
+            } else {
+                telltale.telltaleSeatbelt2 = true;
             }
         }
 
