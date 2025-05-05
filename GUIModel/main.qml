@@ -38,6 +38,8 @@ Window {
     flags: Qt.FramelessWindowHint
     maximumWidth: width
     maximumHeight: height
+    property int update_count  : 0
+
     Item{
         id: rootItem
         width: 1920
@@ -322,6 +324,11 @@ Window {
     //FpsItem{}
 
     function doUpdateClusterData(){
+        update_count = update_count + 1;
+        if (update_count >= 400) {
+            update_count = 0;
+        }
+
         // speed
         var speed_val_capi = cluster_service.getSpAnalogVal();
         meter.speedValue = speed_val_capi / 100.0;
@@ -357,7 +364,16 @@ Window {
         // Turn R
         var turnr_val_capi = cluster_service.getTurnR();
         if (turnr_val_capi === true) {
-            header.setTurnROn();
+            var tr_on_off = update_count / 100;
+            if (tr_on_off === 0) {
+                header.setTurnROn();
+            } else if (tr_on_off === 1) {
+                header.setTurnROff();
+            } else if (tr_on_off === 2) {
+                header.setTurnROn();
+            } else {
+                header.setTurnROff();
+            }
         } else {
             header.setTurnROff();
         }
@@ -365,7 +381,16 @@ Window {
         // Turn L
         var turnl_val_capi = cluster_service.getTurnL();
         if (turnl_val_capi === true) {
-            header.setTurnLOn();
+            var tl_on_off = update_count / 100;
+            if (tl_on_off === 0) {
+                header.setTurnLOn();
+            } else if (tl_on_off === 1) {
+                header.setTurnLOff();
+            } else if (tl_on_off === 2) {
+                header.setTurnLOn();
+            } else {
+                header.setTurnLOff();
+            }
         } else {
             header.setTurnLOff();
         }
@@ -375,13 +400,23 @@ Window {
         if (sbeltl_val_capi === true) {
             telltale.telltaleSeatbelt = false;
         } else {
-            telltale.telltaleSeatbelt = true;
+            var sbl_on_off = update_count / 200;
+            if (sbl_on_off === 0) {
+                telltale.telltaleSeatbelt = true;
+            } else {
+                telltale.telltaleSeatbelt = false;
+            }
         }
         var sbeltr_val_capi = cluster_service.getFrontRightSeatbelt();
         if (sbeltr_val_capi === true) {
             telltale.telltaleSeatbelt2 = false;
         } else {
-            telltale.telltaleSeatbelt2 = true;
+            var sbr_on_off = update_count / 200;
+            if (sbr_on_off === 0) {
+                telltale.telltaleSeatbelt2 = true;
+            } else {
+                telltale.telltaleSeatbelt2 = false;
+            }
         }
 
         var genwarn_val_capi = cluster_service.getGeneralWarn();
