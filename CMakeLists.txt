@@ -72,7 +72,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     ${CLUSTERAPI_LIBRARIES}
 )
 
-if(WITH_DLTTEST)
+if(DISABLE_CLUSTER_BACKEND)
     add_definitions(-DDISABLE_CLUSTER_BACKEND=1)
 endif()
 
