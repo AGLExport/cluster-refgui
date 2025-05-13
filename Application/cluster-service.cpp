@@ -1,7 +1,7 @@
 #include "cluster-service.hxx"
 
-#if ENABLE_CLUSTER_BACKEND
 #include <climits>
+#ifndef DISABLE_CLUSTER_BACKEND
 #include <cluster-api-sdevent.h>
 #include <cluster_api.h>
 #include <systemd/sd-daemon.h>
@@ -24,7 +24,7 @@ Q_INVOKABLE int QClusterService::getSpAnalogVal()
 {
     uint32_t speed_u32 = 0;
     int retval = 0;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     speed_u32 = ::getSpAnalogVal();
 #endif
     if (speed_u32 > (uint32_t)INT_MAX)
@@ -39,7 +39,7 @@ Q_INVOKABLE int QClusterService::getTaAnalogVal()
 {
     uint32_t ta_u32 = 0;
     int retval = 0;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     ta_u32 = ::getTaAnalogVal();
 #endif
     if (ta_u32 > (uint32_t)INT_MAX)
@@ -54,7 +54,7 @@ Q_INVOKABLE int QClusterService::getTrcomTripAVal()
 {
     uint32_t tripa_u32 = 0;
     int retval = 0;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     tripa_u32 = ::getTrcomTripAVal();
 #endif
     if (tripa_u32 > (uint32_t)INT_MAX)
@@ -69,7 +69,7 @@ Q_INVOKABLE int QClusterService::getOTempVal()
 {
     int16_t tmp_val = -40;
     int retval = -40;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     tmp_val = ::getOTempVal();
 #endif
     retval = (int)tmp_val;
@@ -80,7 +80,7 @@ Q_INVOKABLE int QClusterService::getOTempVal()
 Q_INVOKABLE bool QClusterService::getTurnR()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getTurnR();
@@ -95,7 +95,7 @@ Q_INVOKABLE bool QClusterService::getTurnR()
 Q_INVOKABLE bool QClusterService::getTurnL()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getTurnL();
@@ -110,7 +110,7 @@ Q_INVOKABLE bool QClusterService::getTurnL()
 Q_INVOKABLE bool QClusterService::getFrontRightSeatbelt()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getFrontRightSeatbelt();
@@ -125,7 +125,7 @@ Q_INVOKABLE bool QClusterService::getFrontRightSeatbelt()
 Q_INVOKABLE bool QClusterService::getFrontLeftSeatbelt()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getFrontLeftSeatbelt();
@@ -140,7 +140,7 @@ Q_INVOKABLE bool QClusterService::getFrontLeftSeatbelt()
 Q_INVOKABLE bool QClusterService::getGeneralWarn()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getGeneralWarn();
@@ -155,7 +155,7 @@ Q_INVOKABLE bool QClusterService::getGeneralWarn()
 Q_INVOKABLE bool QClusterService::getEngine()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getEngine();
@@ -170,7 +170,7 @@ Q_INVOKABLE bool QClusterService::getEngine()
 Q_INVOKABLE bool QClusterService::getLowBattery()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getLowBattery();
@@ -185,7 +185,7 @@ Q_INVOKABLE bool QClusterService::getLowBattery()
 Q_INVOKABLE bool QClusterService::getLdwOff()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getLdwOff();
@@ -200,7 +200,7 @@ Q_INVOKABLE bool QClusterService::getLdwOff()
 Q_INVOKABLE bool QClusterService::getSrsAirbag()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getSrsAirbag();
@@ -215,7 +215,7 @@ Q_INVOKABLE bool QClusterService::getSrsAirbag()
 Q_INVOKABLE bool QClusterService::getEspOff()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getEspOff();
@@ -230,7 +230,7 @@ Q_INVOKABLE bool QClusterService::getEspOff()
 Q_INVOKABLE bool QClusterService::getBrake()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getBrake();
@@ -245,7 +245,7 @@ Q_INVOKABLE bool QClusterService::getBrake()
 Q_INVOKABLE bool QClusterService::getAbs()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getAbs();
@@ -260,7 +260,7 @@ Q_INVOKABLE bool QClusterService::getAbs()
 Q_INVOKABLE bool QClusterService::getEspAct()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getEspAct();
@@ -275,7 +275,7 @@ Q_INVOKABLE bool QClusterService::getEspAct()
 Q_INVOKABLE bool QClusterService::getHillDescent()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getHillDescent();
@@ -290,7 +290,7 @@ Q_INVOKABLE bool QClusterService::getHillDescent()
 Q_INVOKABLE bool QClusterService::getImmobi()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getImmobi();
@@ -305,7 +305,7 @@ Q_INVOKABLE bool QClusterService::getImmobi()
 Q_INVOKABLE bool QClusterService::getDoor()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getDoor();
@@ -320,7 +320,7 @@ Q_INVOKABLE bool QClusterService::getDoor()
 Q_INVOKABLE bool QClusterService::getEps()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getEps();
@@ -335,7 +335,7 @@ Q_INVOKABLE bool QClusterService::getEps()
 Q_INVOKABLE bool QClusterService::getAutoHiBeamGreen()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getAutoHiBeamGreen();
@@ -350,7 +350,7 @@ Q_INVOKABLE bool QClusterService::getAutoHiBeamGreen()
 Q_INVOKABLE bool QClusterService::getHighbeam()
 {
     bool retval = false;
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_ON_OFF on_off_flag = IC_HMI_OFF;
 
     on_off_flag = ::getHighbeam();
@@ -364,7 +364,7 @@ Q_INVOKABLE bool QClusterService::getHighbeam()
 //-----------------------------------------------------------------------------------
 Q_INVOKABLE QString QClusterService::getGearAtVal()
 {
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     IC_HMI_GEAR_AT_VAL gear_val = IC_HMI_AT_UNUSED;
     QString gear_string = QString("");
 
@@ -425,7 +425,7 @@ static void ic_notify(uint64_t signal, IC_HMI_ON_OFF val)ui
 */
 void QClusterService::run()
 {
-#if ENABLE_CLUSTER_BACKEND
+#ifndef DISABLE_CLUSTER_BACKEND
     sd_event *event = NULL;
     data_pool_client_handle_sdevent handle = NULL;
     int ret = -1;
