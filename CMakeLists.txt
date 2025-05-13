@@ -10,6 +10,8 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(INSTALL_DIRECTORY "/opt/apps")
 
+option(DISABLE_CLUSTER_BACKEND "Disable to cluter backent (for Qt GUI development" OFF)
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
 
@@ -70,14 +72,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     ${CLUSTERAPI_LIBRARIES}
 )
 
-if(CMAKE_CROSSCOMPILING)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE
-        ENABLE_CLUSTER_BACKEND=1 CROSSCOMPILING=1
-    )
-else()
-    target_compile_definitions(${PROJECT_NAME} PRIVATE
-        ENABLE_CLUSTER_BACKEND=0
-    )
+if(WITH_DLTTEST)
+    add_definitions(-DDISABLE_CLUSTER_BACKEND=1)
 endif()
 
 link_directories( ${CLUSTERAPI_LIBRARY_DIRS} )
