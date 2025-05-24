@@ -15,7 +15,7 @@ option(DISABLE_CLUSTER_BACKEND "Disable to cluter backent (for Qt GUI developmen
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
 
-if (CMAKE_CROSSCOMPILING)
+if (NOT DISABLE_CLUSTER_BACKEND)
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(CLUSTERAPI REQUIRED cluster-api-systemd)
 endif()
